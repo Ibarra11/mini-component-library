@@ -6,7 +6,7 @@ import { COLORS } from '../../constants';
 import VisuallyHidden from '../VisuallyHidden';
 
 const ProgressBar = ({ value, size }) => {
-  let component;
+  
   if (size === "large") {
     return <LargeBar width={value}><InnerBar width ={value}/></LargeBar>
   }
@@ -29,6 +29,12 @@ const BaseBar = styled.div.attrs(props => ({
   width: 370px;
   border-radius: 4px;
   background-color: ${COLORS.transparentGray15};
+  box-shadow: inset 0px 2px 4px ${COLORS.transparentGray35};
+  /*
+    We set overflow hidden to constrain the inner box to the this parent boxes shape.
+    Only noticable when progress bar is near full  
+  */
+  overflow: hidden;
 `
 const LargeBar = styled(BaseBar)`
   height: 24px;
@@ -49,11 +55,9 @@ const InnerBar = styled.span`
   width: ${p => p.width + "%"};
   height: 100%;
   vertical-align: top;
-  background-color: red;
+  background-color: ${COLORS.primary};
   border-top-left-radius:4px ;
   border-bottom-left-radius: 4px;
-  border-top-right-radius: ${p => p.width > 99 && p.width < 99.5 ? "2px" : p.width > 99.5 ?  "4px" : null };
-  border-bottom-right-radius: ${p => p.width > 99 && p.width < 99.5 ? "2px" : p.width > 99.5 ?  "4px" : null };
 `
 
 export default ProgressBar;
